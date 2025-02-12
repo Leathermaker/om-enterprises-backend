@@ -1,7 +1,5 @@
 import { Router } from "express";
-import { otpGenerate } from "../Controller/otpGenerateController.js";
-import { otpValidation } from "../Controller/otpValidationController.js";
-import { adminLogin, createAdmin } from "../Controller/auth.controller.js";
+import { adminLogin, createAdmin, otpValidation, otpGenerate } from "../Controller/admin.controller.js";
 
 const router = Router();
 
