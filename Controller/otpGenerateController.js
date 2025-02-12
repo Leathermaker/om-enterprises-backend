@@ -52,7 +52,6 @@ async function nodeMailerSender() {
       html: `Otp: ${otp}`, // HTML body
     });
 
-    console.log("Message sent: %s", info.messageId);
   }
 
   main().catch(console.error);
