@@ -42,36 +42,46 @@ const createAdmin = async (req, res) => {
 // Admin Login
 const adminLogin = async (req, res) => {
   const { email, password } = req.body;
+  
   if (!email || !password) {
-    return res.status(400).send("Please provide email and password");
+    return res.status(400).json({ message: "Please provide email and password" });
   }
 
   try {
     const admin = await Admin.findOne({ email });
     if (!admin) {
-      return res.status(404).send("Admin not found");
+      return res.status(404).json({ message: "Admin not found" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, admin.password);
     if (!isPasswordValid) {
-      return res.status(401).send("Invalid password");
+      return res.status(401).json({ message: "Invalid password" });
     }
 
-    // Create and send token
+    // Create JWT token
     const token = jwt.sign(
       { _id: admin._id, email: admin.email },
-      "YOUR_SECRET_KEY",
-      {
-        expiresIn: "1h",
-      }
+      process.env.JWT_SECRET || "YOUR_SECRET_KEY", // Use environment variable
+      { expiresIn: "1h" }
     );
+
+    // Set token in HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true,    // Prevent client-side JS access
+      secure: process.env.NODE_ENV === "production", // Only send over HTTPS in production
+      sameSite: "Strict", // Prevent CSRF attacks
+      maxAge: 60 * 60 * 1000, // 1 hour
+    });
 
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
-    console.error(error);
+    console.error("Login error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+
 
  async function otpValidation(req,res){
 	const {otp} = req.body
