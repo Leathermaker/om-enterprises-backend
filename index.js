@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv"
 dotenv.config();
 import formRouter from "./Router/formRouter.js";
-import loginRouter from "./Router/loginAdminRouter.js";
+import loginRouter from "./Router/admin.router.js";
 import dbConnect from "./utils/dbConnection.js";
 
 const app = express();
