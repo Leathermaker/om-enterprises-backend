@@ -1,7 +1,26 @@
 import mongoose from "mongoose";
-const otpSchema = mongoose.Schema(
-    {
-        
-    } 
-);
-export const OTP = mongoose.model("OTP", otpSchema);
+const jobFormSchema = mongoose.Schema({
+    title: {
+    type: String,
+    required: true
+  },
+  qualification: {
+    type: String,
+    required: true
+  },
+
+  gender: {
+    type: String,
+    enum: ["male", "female", "other"],
+    required: true
+  },
+  skills: {
+    type: String,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true
+  }
+});
+export const JobForm = mongoose.model("JobForm", jobFormSchema);
