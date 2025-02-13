@@ -1,10 +1,7 @@
 import { Admin } from "../models/admin.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer";
-import twilio from "twilio";
-import otp from "otp-generator";
-
+import { nodeMailerSender, twilioSender } from "../utils/credential.sender.js";
 
 // Create a new user
 const createAdmin = async (req, res) => {
@@ -28,7 +25,7 @@ const createAdmin = async (req, res) => {
       name,
       email,
       phone,
-      password: hashedPassword,
+      password: hashedPassword
     });
 
     await newUser.save();
@@ -42,9 +39,11 @@ const createAdmin = async (req, res) => {
 // Admin Login
 const adminLogin = async (req, res) => {
   const { email, password } = req.body;
-  
+
   if (!email || !password) {
-    return res.status(400).json({ message: "Please provide email and password" });
+    return res
+      .status(400)
+      .json({ message: "Please provide email and password" });
   }
 
   try {
@@ -67,10 +66,10 @@ const adminLogin = async (req, res) => {
 
     // Set token in HTTP-only cookie
     res.cookie("token", token, {
-      httpOnly: true,    // Prevent client-side JS access
+      httpOnly: true, // Prevent client-side JS access
       secure: process.env.NODE_ENV === "production", // Only send over HTTPS in production
       sameSite: "Strict", // Prevent CSRF attacks
-      maxAge: 60 * 60 * 1000, // 1 hour
+      maxAge: 60 * 60 * 1000 // 1 hour
     });
 
     res.status(200).json({ message: "Login successful", token });
@@ -80,139 +79,76 @@ const adminLogin = async (req, res) => {
   }
 };
 
-
-
-
- async function otpValidation(req,res){
-	const {otp} = req.body
-	console.log(otp)
-	const response = await OTP.find({otp})
-	if(response.length>0){
-		res.json({
-			msg:"Correct OTP"
-		})
-	}else{
-		res.json({
-			msg:"Incorrect OTP"
-		})
-	}
-}
-
-
-
-async function otpGenerator() {
-  const otpInfo = otp.generate(4, {
-    digits: true,
-    upperCaseAlphabets: false,
-    lowerCaseAlphabets:false,
-    specialChars: false,
-  });
-
-  const otpItem = new OTP({ otp: otpInfo });
-  const response = await otpItem.save();
-  console.log(response);
-
-  return otpInfo;
-}
-
-async function nodeMailerSender() {
-  const otp = await otpGenerator();
-  console.log(otp);
-
-  const getOtpDb = await OTP.find({ otp });
-  console.log(getOtpDb);
-
-  if (getOtpDb.length > 0) {
-    setTimeout(async () => {
-      const response = await OTP.deleteOne({ otp });
-      console.log(response);
-    }, 100000);
-  }
-
-  const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for port 465, false for other ports
-    auth: {
-      user: "aliyah.thiel@ethereal.email",
-      pass: process.env.ETHREAL_PASS,
-    },
-    text: otp,
-  });
-
-  async function main() {
-    const info = await transporter.sendMail({
-      from: '"Maddison Foo Koch 👻" <aliyah.thiel@ethereal.email>', // sender address
-      to: "aliyah.thiel@ethereal.email", // recipient
-      subject: "Hello ✔", // Subject line
-      text: "Hello world?", // plain text body
-      html: `Otp: ${otp}`, // HTML body
-    });
-
-  }
-
-  main().catch(console.error);
-}
-
-async function twilioSender() {
-  const otp = await otpGenerator();
-  console.log(otp);
-
-  const getOtpDb = await OTP.find({ otp });
-  console.log(getOtpDb);
-
-  if (getOtpDb.length > 0) {
-    setTimeout(async () => {
-      const response = await OTP.deleteOne({ otp });
-      console.log(response);
-    }, 100000);
-  }
-
-
-  const accountSid = process.env.ACCOUNTSID;
-  const authToken = process.env.AUTHTOKEN;
-  const client = new twilio(accountSid, authToken);
-console.log(client, accountSid, authToken)
-
-  async function sendSMS() {
-    try {
-      const message = await client.messages.create({
-        body: `Do not share the OTP: ${otp}, use within 1 minute`,
-        from: "+17179225895", // Your Twilio phone number
-        to: "+91 7814897900",
-        username: "aliyah.thiel@ethereal.email"
-        // Recipient's phone number
-      });
-
-      console.log("Message sent successfully:", message.sid);
-      console.log(message);
-    } catch (error) {
-      console.error("Error sending SMS:", error);
-    }
-  }
-
-  sendSMS();
-}
-
- async function otpGenerate(req, res) {
-  const { creditionalId, password } = req.body;
+async function otpGenerate(req, res) {
+  const { emailORphone } = req.body;
 
   try {
-    if (creditionalId.length) {
-      // Send email OTP
-      console.log("inside");
-      nodeMailerSender();
-      res.json({ msg: "Mail is sent successfully" });
+    if (!emailORphone) {
+      return res.status(400).json({ message: "Provide phone or email" });
+    }
+
+    // Check if emailORphone is an email or phone number
+    const isEmail = /\S+@\S+\.\S+/.test(emailORphone); // Simple email regex
+
+    if (isEmail) {
+      const admin = await Admin.findOne({ email: emailORphone });
+      if (!admin) res.status(400).json({ message: "Admin not find" });
+      await nodeMailerSender(admin);
+      return res.json({ message: "Mail is sent successfully" });
     } else {
-      // Send phone OTP
-      twilioSender();
-      res.json({ msg: "OTP is sent successfully" });
+      const admin = await Admin.findOne({ phone: emailORphone });
+      if (!admin) res.status(400).json({ message: "Admin not find" });
+      await twilioSender(admin);
+      return res.json({ message: "OTP is sent successfully" });
     }
   } catch (error) {
-    console.log(error);
+    console.error("OTP generation error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
+
+async function otpValidation(req, res) {
+  const { otp } = req.body;
+  
+  console.log("Received OTP:", otp);
+
+  try {
+    // Find admin by OTP
+    const admin = await Admin.findOne({ otp });
+    
+    console.log("Admin Found:", admin);
+
+    if (!admin) {
+      return res.status(400).json({ msg: "Incorrect OTP" });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { _id: admin._id, email: admin.email },
+      process.env.JWT_SECRET || "YOUR_SECRET_KEY",
+      { expiresIn: "1h" }
+    );
+
+    // Set token in HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true, // Prevent client-side JS access
+      secure: process.env.NODE_ENV === "production", // HTTPS in production
+      sameSite: "Strict", // Prevent CSRF attacks
+      maxAge: 60 * 60 * 1000, // 1 hour
+    });
+
+    // Remove OTP after validation
+    admin.otp = undefined;
+    await admin.save();
+
+    return res.status(200).json({ message: "OTP verified successfully", token });
+  } catch (error) {
+    console.error("OTP Validation Error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 }
 
 
 
-export { adminLogin, createAdmin, otpValidation , otpGenerate};
+export { adminLogin, createAdmin, otpValidation, otpGenerate };

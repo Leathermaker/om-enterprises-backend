@@ -5,7 +5,7 @@ const router = Router();
 
 router.post("/register", createAdmin);
 router.post("/login", adminLogin);
-router.post("/login/otp", otpGenerate);
-router.post("/login/validation", otpValidation);
+router.post("/login/generate/otp", otpGenerate);
+router.post("/login/validate/otp", otpValidation);
 
 export default router;

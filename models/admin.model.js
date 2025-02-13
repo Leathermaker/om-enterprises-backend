@@ -18,6 +18,11 @@ const adminSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  otp : {
+    type: Number,
+    required: false,
+    default: null
   }
 }, { timestamps: true });
 
