@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import { Admin } from "../models/admin.model";
 
-const secretKey = "omenterprisesSecretKey";
+const secretKey = "YOUR_SECRET_KEY";
 
-const authenticate = async (req, resp, next) => {
+const isAuthenticate = async (req, resp, next) => {
   try {
     // take the data from the headers in token variable
     const token = req.headers.authorization.split(" ")[1];
@@ -45,4 +45,23 @@ const authenticate = async (req, resp, next) => {
   }
 };
 
-module.exports = authenticate;
+
+export const authorizedRole = (...roles) => {
+    return (req, resp, next) => {
+        console.log('>>>>>>>>>>>', req.user)
+      if (!req.user || !roles.includes(req.user.role)) {
+        return next(
+          new ErrorHandler(
+            `Role ${req.user?.role} is not allow this resource`,
+            403
+          )
+        );
+      }
+      next();
+    };
+  };
+
+export {
+    isAuthenticate,
+    authorizedRole
+}

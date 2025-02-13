@@ -59,7 +59,7 @@ const adminLogin = async (req, res) => {
 
     // Create and send token
     const token = jwt.sign(
-      { id: admin._id, email: admin.email },
+      { _id: admin._id, email: admin.email },
       "YOUR_SECRET_KEY",
       {
         expiresIn: "1h",
