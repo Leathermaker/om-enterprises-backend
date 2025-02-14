@@ -25,7 +25,8 @@ const createAdmin = async (req, res) => {
       name,
       email,
       phone,
-      password: hashedPassword
+      password: hashedPassword,
+      role: "admin"
     });
 
     await newUser.save();

@@ -29,8 +29,8 @@ const isAuthenticate = async (req, resp, next) => {
     if (!admin) throw new Error("user unavailable");
     //    sending below data to the req and capture it in isVarify function
     req.token = token;
-    req.admin = admin;
-    req.adminId = admin._id;
+    req.user = admin;
+    req.userId = admin._id;
 
     // console.log('>>>>>>>>>>>', req.user)
 
@@ -47,17 +47,23 @@ const isAuthenticate = async (req, resp, next) => {
 };
 
 
- const authorizedRole = (...roles) => {
-    return (req, resp, next) => {
-        console.log('>>>>>>>>>>>', req.user)
-      if (!req.user || !roles.includes(req.user.role)) {
-        return next(
-          new ErrorHandler(
-            `Role ${req.user?.role} is not allow this resource`,
-            403
-          )
-        );
+const authorizedRole = (...roles) => {
+    return (req, res, next) => {
+      // Make sure req.user exists and has a role property
+      if (!req.user || !req.user.role) {
+        return res.status(401).json({
+          message: "Unauthorized: No user or role found in request"
+        });
       }
+  
+      // Check if the user's role is included in the allowed roles
+      if (!roles.includes(req.user.role)) {
+        return res.status(403).json({
+          message: `Role ${req.user.role} is not allowed to access this resource`
+        });
+      }
+  
+      // User is authorized, proceed to the next middleware or route handler
       next();
     };
   };
