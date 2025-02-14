@@ -9,9 +9,9 @@ router.post("/login", adminLogin);
 router.post("/login/generate/otp", otpGenerate);
 router.post("/login/validate/otp", otpValidation);
 
-
-router.get("/validate",isAuthenticate, authorizedRole('admin'), (req, res) => {
+router.get("/validate",isAuthenticate, authorizedRole('admin'), (_, res) => {
     res.status(200).json({ message: "Admin verified successfully" });
   });
 
 export default router;
+  
