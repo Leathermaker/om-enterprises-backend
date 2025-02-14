@@ -17,6 +17,7 @@ const jobFormSchema = mongoose.Schema({
   skill: {
     type: String,
     required: true
+    
   },
   location: {
     type: String,

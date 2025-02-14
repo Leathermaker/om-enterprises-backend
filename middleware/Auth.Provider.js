@@ -6,7 +6,6 @@ const secretKey = "YOUR_SECRET_KEY";
 const isAuthenticate = async (req, resp, next) => {
   try {
     // take the data from the headers in token variable
-    console.log(req)
     const token = req.headers.authorization.split(" ")[1];
     if (!token) {
       return resp.status(400).json({
@@ -16,7 +15,6 @@ const isAuthenticate = async (req, resp, next) => {
       });
     }
 
-    console.log(">>>>>>>>>>>", token);
     // Verify the token with secret key which we used in generating token in userModel page
     const decoded = jwt.verify(token, secretKey);
 

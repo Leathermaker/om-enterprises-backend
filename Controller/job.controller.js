@@ -29,7 +29,6 @@ const addJob = async (req, res) => {
 
 
 const updateJob = async (req, res) => {
-	console.log("hi there")
   try {
     const { jobId, title, qualification, gender, skill, location } = req.body;
     const response = await JobForm.find({ _id: jobId });
@@ -76,4 +75,22 @@ const readJob = async (req, res) => {
   }
 };
 
-export { addJob, readJob ,updateJob};
+
+const deleteJob = async (req, res) => {
+	try {
+		const {jobId} = req.body
+		console.log(jobId)
+		const response = await JobForm.findOne({_id:jobId});
+		console.log(response)
+    if(response){
+		const deleteResult =  await JobForm.deleteOne({_id:response._id})
+		res.json({
+			msg:deleteResult
+		})
+	}
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { addJob, readJob ,updateJob,deleteJob};
