@@ -81,24 +81,25 @@ const adminLogin = async (req, res) => {
 };
 
 async function otpGenerate(req, res) {
-  const { emailORphone } = req.body;
+  const { payload } = req.body; // Destructure payload from request body
+  console.log(payload);
 
   try {
-    if (!emailORphone) {
+    if (!payload) {
       return res.status(400).json({ message: "Provide phone or email" });
     }
 
-    // Check if emailORphone is an email or phone number
-    const isEmail = /\S+@\S+\.\S+/.test(emailORphone); // Simple email regex
+    // Check if payload is an email or phone number
+    const isEmail = /\S+@\S+\.\S+/.test(payload); // Simple email regex
 
     if (isEmail) {
-      const admin = await Admin.findOne({ email: emailORphone });
-      if (!admin) res.status(400).json({ message: "Admin not find" });
+      const admin = await Admin.findOne({ email: payload.email });
+      if (!admin) return res.status(400).json({ message: "Admin not found" });
       await nodeMailerSender(admin);
       return res.json({ message: "Mail is sent successfully" });
     } else {
-      const admin = await Admin.findOne({ phone: emailORphone });
-      if (!admin) res.status(400).json({ message: "Admin not find" });
+      const admin = await Admin.findOne({ phone: Number (payload.phone) });
+      if (!admin) return res.status(400).json({ message: "Admin not found" });
       await twilioSender(admin);
       return res.json({ message: "OTP is sent successfully" });
     }
