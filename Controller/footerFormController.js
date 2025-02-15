@@ -18,3 +18,20 @@ export async function footerFormController(req, res) {
     console.log(error);
   }
 }
+export async function footerFormGet(req, res) {
+  try {
+    
+    const result = await footerForm.find()
+    if (result) {
+      res.status(200).json({
+        msg: result,
+      });
+    } else {
+      res.status(402).json({
+        msg: "Unsuccessfully sent",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

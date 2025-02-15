@@ -10,12 +10,13 @@ async function nodeMailerSender(admin) {
   await admin.save();
   console.log(otp);
 
-  const getOtpDb = await Admin.find({ otp });
-  console.log(getOtpDb);
+  const adminDb = await Admin.find({ otp });
+  console.log(adminDb);
 
-  if (getOtpDb.length > 0) {
+  if (adminDb.length > 0) {
     setTimeout(async () => {
-      const response = await Admin.deleteOne({ otp });
+      adminDb.otp = null
+      await adminDb.save()
       console.log(response);
     }, 100000);
   }
@@ -50,12 +51,13 @@ async function twilioSender(admin) {
   
   await admin.save();
 
-  const getOtpDb = await Admin.find({ otp });
-  console.log(getOtpDb);
+  const adminDb = await Admin.find({ otp });
+  console.log(adminDb);
 
   if (getOtpDb.length > 0) {
     setTimeout(async () => {
-      const response = await Admin.deleteOne({ otp });
+      adminDb.otp = null
+      await adminDb.save()
       console.log(response);
     }, 100000);
   }
