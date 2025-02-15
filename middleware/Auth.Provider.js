@@ -15,7 +15,6 @@ const isAuthenticate = async (req, resp, next) => {
       });
     }
 
-    console.log(">>>>>>>>>>>", token);
     // Verify the token with secret key which we used in generating token in userModel page
     const decoded = jwt.verify(token, secretKey);
 

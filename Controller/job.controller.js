@@ -1,40 +1,125 @@
-import { JobForm } from "../models/job.model.js"
+import { JobForm } from "../models/job/job.model.js";
+import { JobApplyForm } from "../models/job/jobApply.model.js";
 
-const addJob = async(req, res)=>{
-     const { title , qualification, gender, skill , location} = req.body;
+const addJob = async (req, res) => {
+  try {
+    const { title, qualification, gender, skill, location } = req.body;
+    console.log(req.body);
+    if (!title && !qualification && !gender && !skill && !location) {
+      return res.status(400).json({ message: "provide all details" });
+    }
+    const newJob = await JobForm  .create({
+      title,
+      qualification,
+      gender,
+      skill,
+      location,
+    });
 
-	 if(!title || !qualification || gender || !skill || !location){
-		return res
-        .status(400)
-        .json({ message: "provide all details" });
-	 }
-const newJob = JobForm.create({
-	title,
-	qualification,
-	gender,
-	skill,
-	location
-})
+    return res.status(200).json({ message: "new job created", newJob });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
 
-return res.status(200).json({message: "new job created", newJob, })
+  }
+};
+
+const updateJob = async (req, res) => {
+  try {
+    const { jobId, title, qualification, gender, skill, location } = req.body;
+    const response = await JobForm.find({ _id: jobId });
+    if (response) {
+      if (!title || !qualification || !gender || !skill || !location) {
+        return res.status(400).json({ message: "provide all details" });
+      }
+      const updatedData = {
+        title,
+        qualification,
+        gender,
+        skill,
+        location,
+      };
+      const updatedJob = await JobForm.updateOne(
+        { _id: jobId },
+        { $set: updatedData }
+      );
+
+      return res.status(200).json({ message: "new job created", updatedJob });
+    } else {
+      res.json({
+        msg: "Jobs info is invalid",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+
+  }
+};
+
+const readJob = async (req, res) => {
+  try {
+    const response = await JobForm.find();
+    res.json({
+      msg: response,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+
+  }
+};
+
+const deleteJob = async (req, res) => {
+  try {
+    const { jobId } = req.body;
+    console.log(jobId);
+    if(!jobId){
+      return res.status(400).json({ message: "provide job Id" });
+    }
+   const deletedJob  = await JobForm.findOneAndDelete({ _id: jobId });
+    res.json({
+      msg: "Job deleted",
+      deletedJob,
+    })
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+
+  }
+};
+
+const applyJob = async (req, res) => {
+  try {
+    const { jobId, name, email, phone, resume, availability } = req.body;
+    const job = await JobForm.findOne({ _id: jobId });
+    if (job) {
+      if (!name && !email && !availability && !resume) {
+        return res.status(400).json({ message: "provide all details" });
+      }
+      const newJobApply = await JobApplyForm.create({
+        jobId,
+        name,
+        email,
+        phone,
+        resume,
+        availability,
+      })
+      return res.status(200).json({ message: " job applied", newJobApply });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error" , error: error.message });
+  }
+};
+
+
+const getAllAppliedJobs = async (req, res) => {
+  try {
+      console.log("get all applied jobs");
+    const jobs = await JobApplyForm.find().populate("jobId");
+    if (!jobs) {
+     return res.status(400).json({ message: "No jobs applied" });
+    }
+    return res.status(200).json({ message: " job applied", jobs });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 }
 
-
-
-
-const readJob  = async(req,res)=>{
-	try {
-		const response =  await JobForm.find()
-		res.json({
-			msg:response
-		})
-	} catch (error) {
-		console.log(error)
-	}
-}
-
-
-export {
-	addJob,
-	readJob
-}
+export { addJob, readJob, updateJob, deleteJob, applyJob ,getAllAppliedJobs};
