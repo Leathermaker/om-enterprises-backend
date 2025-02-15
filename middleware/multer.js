@@ -1,4 +1,7 @@
-import { v2 as cloudinary } from "cloudinary";
+import axios from "axios";
+import fs from "fs"
+import cloudinary from "cloudinary";
+import path from "path";
 
 cloudinary.config({
   cloud_name: "debzdd4wk",
@@ -6,22 +9,40 @@ cloudinary.config({
   api_secret: "y_PwyywGHwjbqIA9d_YV9cFAgJY",
 });
 
+
+
 const uploadFromUrl = async (req, res, next) => {
-  const { file } = req.body; // URL from frontend
-    console.log(file)
-  if (!file) {
-    return res.status(400).json({ error: "No file URL provided" });
-  }
-
-  try {
-    const result = await cloudinary.uploader.upload(file, { folder: "uploads" });
-
-    req.fileUrl = result.secure_url;
-
-    next();
-  } catch (error) {
-    return res.status(500).json({ error: "Cloudinary upload failed", details: error.message });
-  }
+    try {
+        const { imageUrl } = req.body;
+        console.log(imageUrl)
+    
+        if (!imageUrl) {
+          return res.status(400).json({ error: "Image URL is required" });
+        }
+    
+        // Download the image
+        const response = await axios({
+          url: imageUrl,
+          responseType: "arraybuffer",
+        });
+    
+        const tempPath = `uploads/temp-image-${Date.now()}.jpg`;
+        fs.writeFileSync(tempPath, Buffer.from(response.data, "binary"));
+    
+        // Upload to Cloudinary
+        const result = await cloudinary.v2.uploader.upload(tempPath, {
+          folder: "uploads",
+        });
+    
+        // Delete temporary file
+        fs.unlinkSync(tempPath);
+        console.log(result.secure_url)
+        req.file =  result.secure_url
+        next()
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error uploading image" });
+      }
 };
 
 export default uploadFromUrl;
