@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 dotenv.config();
 import formRouter from "./Router/formRouter.js";
 import companyClientRouter from "./Router/companyClientRouter.js";
+import employeeRouter from "./Router/employeeRouter.js";
 import loginRouter from "./Router/admin.router.js"; 
 import jobRouter from "./Router/job.router.js"; 
 import userJobRouter from "./Router/user/job.router.js"; 
@@ -32,6 +33,7 @@ app.use("/api/v1/admin",jobRouter)
 app.use('/api/v1/admin',companyClientRouter)
 
 //todo for company employess img name posiotpm
+app.use('/api/v1/admin',employeeRouter)
 
 //user login
 
