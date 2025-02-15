@@ -54,7 +54,7 @@ async function twilioSender(admin) {
   const adminDb = await Admin.find({ otp });
   console.log(adminDb);
 
-  if (getOtpDb.length > 0) {
+  if (adminDb.length > 0) {
     setTimeout(async () => {
       adminDb.otp = null
       await adminDb.save()
