@@ -1,4 +1,4 @@
-import { JobForm } from "../models/job.model"
+import { JobForm } from "../models/job.model.js"
 
 const addJob = async(req, res)=>{
      const { title , qualification, gender, skill , location} = req.body;
@@ -20,6 +20,21 @@ return res.status(200).json({message: "new job created", newJob, })
 }
 
 
+
+
+const readJob  = async(req,res)=>{
+	try {
+		const response =  await JobForm.find()
+		res.json({
+			msg:response
+		})
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+
 export {
-	addJob
+	addJob,
+	readJob
 }
