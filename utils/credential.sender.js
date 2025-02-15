@@ -71,7 +71,7 @@ async function twilioSender(admin) {
         body: `Do not share the OTP: ${otp}, use within 1 minute`,
         from: "+17179225895", // Your Twilio phone number
         to: "+91 7814897900",
-        username: "aliyah.thiel@ethereal.email"
+        username: "mariah.lehner64@ethereal.email"
         // Recipient's phone number
       });
 
