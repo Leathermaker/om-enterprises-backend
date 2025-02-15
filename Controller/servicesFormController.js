@@ -18,3 +18,19 @@ export async function servicesForm(req, res) {
     console.log(error);
   }
 }
+export async function servicesFormGet(req, res) {
+  try {
+    const result = await formPricing.find();
+    if (result) {
+      res.status(200).json({
+        msg: result,
+      });
+    } else {
+      res.status(402).json({
+        msg: "Unsuccessfully sent",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
