@@ -27,7 +27,7 @@ router.put(
 );
 router.get("/employee", allEmployees);
 router.delete(
-  "/employee",
+  "/employee/:id",
   isAuthenticate,
   authorizedRole("admin"),
   deleteEmployee

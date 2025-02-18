@@ -18,6 +18,7 @@ const addJob = async (req, res) => {
 
     return res.status(200).json({ message: "new job created", newJob });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server error" });
 
   }
@@ -55,32 +56,31 @@ const updateJob = async (req, res) => {
   }
 };
 
-const readJob = async (req, res) => {
+
+const allJobs = async (req, res) => { 
   try {
-    const response = await JobForm.find();
-    res.json({
-      msg: response,
-    });
+    const jobs = await JobForm.find();
+    if (!jobs) {
+      return res.status(400).json({ message: "No jobs" });
+    }
+    return res.status(200).json({ message: " jobs", jobs });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
-
-  }
-};
-
+}
+}
 const deleteJob = async (req, res) => {
   try {
-    const { jobId } = req.body;
-    console.log(jobId);
-    if(!jobId){
+    const { id } = req.params;
+    if(!id){
       return res.status(400).json({ message: "provide job Id" });
     }
-   const deletedJob  = await JobForm.findOneAndDelete({ _id: jobId });
-    res.json({
+   const deletedJob  = await JobForm.findOneAndDelete({ _id: id });
+   return res.json({
       msg: "Job deleted",
       deletedJob,
     })
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+   return res.status(500).json({ message: "Server error" });
 
   }
 };
@@ -122,4 +122,4 @@ const getAllAppliedJobs = async (req, res) => {
   }
 }
 
-export { addJob, readJob, updateJob, deleteJob, applyJob ,getAllAppliedJobs};
+export { addJob, allJobs, updateJob, deleteJob, applyJob ,getAllAppliedJobs};

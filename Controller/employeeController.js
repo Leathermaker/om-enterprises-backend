@@ -39,25 +39,28 @@ export async function allEmployees(req, res) {
 }
 export async function deleteEmployee(req, res) {
   try {
-    console.log("delete");
-    console.log(req.body);
-    const { id } = req.body;
-    const result = await Employee.findOne({ _id: id });
-    console.log(result);
-    if (result && result !== null) {
-      console.log("ih");
-      const response = await Employee.deleteOne({ _id: id });
-      res.json({
-        data: response,
-      });
-    } else {
-      res.json({
-        msg: "This User is not Exist anymore",
-      });
+
+    const { id } = req.params;
+    if(!id) {
+      return res.status(400).json({
+        msg: "Privide Id of the employee",
+        status: false 
+      })
     }
+    const  deletedEmp = await Employee.findByIdAndDelete(id);
+    if(!deletedEmp) {
+      return res.status(400).json({ 
+        msg: "Employee not found",
+        status: false 
+      })
+    }
+    res.status(200).json({
+      msg: "Employee deleted successfully",
+      status: true
+    })
   } catch (error) {
     console.log(error);
-    res.json({
+    res.status(400).json({
       msg: "Unexpected Error",
     });
   }

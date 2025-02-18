@@ -11,7 +11,7 @@ const jobFormSchema = mongoose.Schema({
 
   gender: {
     type: String,
-    enum: ["male", "female", "other"],
+    enum: ["male", "female", "other" ,"any"],
     required: true
   },
   skill: {
