@@ -19,7 +19,7 @@ const jobApplySchema = mongoose.Schema(
     },
     availability: {
       type: String,
-      enum: ["full-time", "half-time", "freelance "],
+      enum: ["full-time", "part-time", "freelance "],
       required: true,
     },
     resume: {

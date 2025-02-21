@@ -1,7 +1,5 @@
-import axios from "axios";
 import fs from "fs";
 import cloudinary from "cloudinary";
-import path from "path";
 
 cloudinary.config({
   cloud_name: "debzdd4wk",
@@ -18,6 +16,7 @@ const uploadFromUrl = async (req, res, next) => {
     // Upload to Cloudinary
     const result = await cloudinary.v2.uploader.upload(req.file.path, {
       folder: "uploads",
+      resource_type: "raw",
     });
 
     // Delete temporary file

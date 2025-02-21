@@ -22,7 +22,7 @@ router.post(
 router.put(
   "/employee/:id",
   isAuthenticate,
-  authorizedRole("admin"),
+  authorizedRole("admin"),  
   updateEmployee
 );
 router.get("/employee", allEmployees);

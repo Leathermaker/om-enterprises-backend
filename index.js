@@ -8,6 +8,7 @@ import employeeRouter from "./Router/employeeRouter.js";
 import loginRouter from "./Router/admin.router.js"; 
 import jobRouter from "./Router/job.router.js"; 
 import userJobRouter from "./Router/user/job.router.js"; 
+import planRouter from "./Router/plan.router.js"
 import dbConnect from "./utils/dbConnection.js";
 
 const app = express();
@@ -32,8 +33,8 @@ app.use("/api/v1/admin",jobRouter)
 
 app.use('/api/v1/admin',companyClientRouter)
 
-//todo for company employess img name posiotpm
 app.use('/api/v1/admin',employeeRouter)
+app.use('/api/v1/admin/plan',planRouter)
 
 //user login
 
