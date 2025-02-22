@@ -96,14 +96,16 @@ const updatePlan = async (req, res) => {
             { $set: updateObj }
         )
 
-        if(result.modifiedCount > 0){
+        if(!result){
             return res.status(200).json({
-                msg:"Successfully Updated"
+            msg:"Provided data is already exist"
+
+
             })
         }
 
         return res.status(402).json({
-            msg:"Provided data is already exist"
+                msg:"Successfully Updated"
         })
 
     } catch (error) {
