@@ -23,7 +23,8 @@ const getPlan = async(req,res)=>{
          const allPlans = await Plan.find({ category })
          if(allPlans){
            return res.status(200).json({
-                msg:allPlans
+                msg:"all plans",
+                plans : allPlans
             })
          }
          return res.status(402).json({

@@ -5,6 +5,6 @@ const router = Router();
 
 //job todo
 router.post("/add",isAuthenticate, authorizedRole("admin"), addPlan);
-router.get("/get",getPlan)
+router.get("/get/:category",getPlan)
 
-export default router
+export default router   
