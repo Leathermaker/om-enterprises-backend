@@ -104,7 +104,7 @@ const updatePlan = async (req, res) => {
             })
         }
 
-        return res.status(402).json({
+        return res.status(200).json({
                 msg:"Successfully Updated"
         })
 
