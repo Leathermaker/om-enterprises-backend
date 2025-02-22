@@ -6,7 +6,7 @@ const router = Router();
 //job todo
 router.post("/add",isAuthenticate, authorizedRole("admin"), addPlan);
 router.get("/get/:category",getPlan)
-router.delete("/delete",deletePlan) 
+router.delete("/delete/:id",deletePlan) 
 router.put('/update/:id',updatePlan)
 
-export default router
+export default router   
