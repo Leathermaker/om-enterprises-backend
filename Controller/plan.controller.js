@@ -17,6 +17,30 @@ const addPlan = async (req, res) => {
 };
 
 
+const getPlan = async(req,res)=>{
+    try {
+        const { category } = req.params
+         const allPlans = await Plan.find({ category })
+         if(allPlans){
+           return res.status(200).json({
+                msg:allPlans
+            })
+         }
+         return res.status(402).json({
+            msg:"No such category present"
+         })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            msg:"Unexpected Error",           
+        })
+    }
+}
+
+
+
+
 export {
-    addPlan
+    addPlan,
+    getPlan
 }
