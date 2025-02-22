@@ -20,11 +20,12 @@ const addPlan = async (req, res) => {
 const getPlan = async(req,res)=>{
     try {
         const { category } = req.params
+        console.log(category)
          const allPlans = await Plan.find({ category })
          if(allPlans){
            return res.status(200).json({
-                msg:"all plans",
-                plans : allPlans
+                msg:"Successfully done",
+                plans:allPlans
             })
          }
          return res.status(402).json({
@@ -39,9 +40,86 @@ const getPlan = async(req,res)=>{
 }
 
 
+const deletePlan = async(req,res)=>{
+    try {
+        const { id } = req.body
+        
+        const response = await Plan.findOne({_id  : id})
+        console.log(response)
+
+        if(!response){
+            return res.status(402).json({
+                msg:"Plan is not available"
+            })
+        }
+        const confirm = await Plan.deleteOne({ _id : id })
+
+        console.log(confirm)
+        if(confirm.deleteCount > 0){
+            return res.status(200).json({
+                msg:"Successfully deleted"
+            })
+        }
+        return res.status(402).json({
+            msg:"Not deleted"
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            msg:"Unexpected Error"
+        })
+    }
+}
+
+
+const updatePlan = async(req,res)=>{
+    try {
+        const { id } = req.params
+        const { title,category,price,descriptions } = req.body
+
+        const response = await Plan.findOne({ _id : id })
+
+        if(!response){
+            return res.status(402).json({
+                msg:"Plan is not present"
+            })
+        }
+
+        const updateObj = {
+            title: title || response.title,
+            category: category || response.category,
+            price : price || response.price,
+            descriptions : descriptions || response.descriptions
+        }
+
+        const result = await Plan.updateOne(
+            {_id : id},
+            {$set : updateObj}
+        )
+
+        if(result.modifiedCount > 0){
+            return res.status(200).json({
+                msg:"Successfully Updated"
+            })
+        }
+
+        return res.status(402).json({
+            msg:"Provided data is already exist"
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(402).json({
+            msg:"Unexpected Error"
+        })
+    }
+}
+
 
 
 export {
     addPlan,
-    getPlan
+    getPlan,
+    deletePlan,
+    updatePlan
 }
