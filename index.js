@@ -12,7 +12,7 @@ import planRouter from "./Router/plan.router.js"
 import dbConnect from "./utils/dbConnection.js";
 
 const app = express();
-const port = 3000;
+const port = 3100;
 const corsOptions = {
   origin: ["http://localhost:5173","http://localhost:5174", "https://om-enterprises.vercel.app/"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -20,7 +20,7 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 dbConnect();
@@ -45,6 +45,6 @@ app.use('/api/v1/admin/plan',planRouter)
 //user routes
 app.use("/api/v1/user", userJobRouter);
 
-app.listen(port, () => {
+app.listen(port|| 4000, () => {
   console.log(`Successfully  connected with http://localhost:${port}`);
 });
