@@ -40,21 +40,4 @@ export async function contactUsFormController(req, res) {
 
 
 
-export async function contactUsFormGetController(req, res) {
 
-  try {
-  
-    const result = await formContact.find();
-    if (result) {
-      res.status(200).json({
-        msg: result,
-      });
-    } else {
-      res.status(402).json({
-        msg: "Unsuccessfully sent",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}

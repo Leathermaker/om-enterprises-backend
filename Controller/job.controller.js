@@ -88,7 +88,7 @@ const deleteJob = async (req, res) => {
 const applyJob = async (req, res) => {
 
   try {
-    const { jobId, name, email, phone, availability } = req.body;
+    const { jobId, name, email, phone,isFresher, availability } = req.body;
     const resume = req.imageUrl;
     console.log(req.body, resume)
     const job = await JobForm.findOne({ _id: jobId });
@@ -99,14 +99,13 @@ const applyJob = async (req, res) => {
       if (!jobId && !name && !email && !availability && !resume) {
         return res.status(400).json({ message: "provide all details" });
       }
-      console.log("apply job", req.body, resume);
-
       const newJobApply = await JobApplyForm.create({
         jobId,
         name,
         email,
         phone,
         resume,
+        isFresher,
         availability,
       })
       console.log(newJobApply)

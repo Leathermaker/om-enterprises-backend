@@ -4,9 +4,9 @@ import { authorizedRole, isAuthenticate } from "../middleware/Auth.Provider.js";
 const router = Router();
 
 //job todo
-router.post("/add",isAuthenticate, authorizedRole("admin"), addPlan);
-router.get("/get/:category",getPlan)
-router.delete("/delete/:id",deletePlan) 
-router.put('/update/:id',updatePlan)
+router.post("/add", isAuthenticate, authorizedRole("admin"), addPlan);
+router.get("/get/:category", getPlan)
+router.delete("/delete/:id", isAuthenticate, authorizedRole("admin"), deletePlan)
+router.put('/update/:id', isAuthenticate, authorizedRole("admin"), updatePlan)
 
 export default router   

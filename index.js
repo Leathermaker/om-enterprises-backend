@@ -36,11 +36,6 @@ app.use('/api/v1/admin',companyClientRouter)
 app.use('/api/v1/admin',employeeRouter)
 app.use('/api/v1/admin/plan',planRouter)
 
-//user login
-
-
-
-
 //user routes
 app.use("/api/v1/user", userJobRouter);
 

@@ -1,24 +1,23 @@
 import { Router } from "express";
-import { footerFormController, footerFormGet } from "../Controller/footerFormController.js";
-import { contactUsFormController, contactUsFormGetController } from "../Controller/contactUsFormController.js";
-import { servicesForm, servicesFormGet } from "../Controller/servicesFormController.js";
+import { allInstantCallBackQueries, getAllContactQueries, instantCallBackQuery, postContactUs } from "../Controller/instantCall.controller.js";
+import { authorizedRole, isAuthenticate } from "../middleware/Auth.Provider.js";
 
 
 const router = Router();
 
 //footer form
-router.post("/footer/form",footerFormController);
-router.get("/footer/form",footerFormGet);
-
-//instant call back
-router.post("/services/form",servicesForm);
-router.get("/services/form",servicesFormGet);
-
-
+router.post("/instant/call", instantCallBackQuery);
+router.get("/instant/call",
+    isAuthenticate,
+    authorizedRole("admin"),
+    allInstantCallBackQueries);
 
 
 //contact us
-router.post("/contactus/form",contactUsFormController);
-router.get("/contactus/form",contactUsFormGetController);
+router.post("/form/contact", postContactUs);
+router.get("/form/contact",
+    isAuthenticate,
+    authorizedRole("admin"),
+    getAllContactQueries);
 
 export default router;

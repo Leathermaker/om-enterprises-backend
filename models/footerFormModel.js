@@ -1,10 +1,26 @@
 import mongoose from "mongoose";
 
 const footerFormSchema = mongoose.Schema({
-  name: String,
-  email: String,
-  subject: String,
-  message: String,
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  phone : {
+    type: Number,
+    required: true,
+  },
+  subject: {
+    type: String,
+    default: "No Subject",
+  },
+  message: {
+    type: String,
+    required: true,
+  }
 });
 
-export const footerForm = mongoose.model("Form", footerFormSchema);
+export const footerForm = mongoose.model("InstantCallBack", footerFormSchema);

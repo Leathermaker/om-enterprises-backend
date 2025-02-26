@@ -17,6 +17,10 @@ const jobApplySchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    isFresher: {
+      type: Boolean,
+      default: true,
+    },
     availability: {
       type: String,
       enum: ["full-time", "part-time", "freelance "],
