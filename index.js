@@ -13,14 +13,14 @@ import dbConnect from "./utils/dbConnection.js";
 
 const app = express();
 const port = 3100;
-const corsOptions = {
-  origin: ["*"],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
+// const corsOptions = {
+//   origin: ["*"],
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true,
+//   optionsSuccessStatus: 204,
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 dbConnect();
