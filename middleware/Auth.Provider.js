@@ -7,7 +7,7 @@ const isAuthenticate = async (req, resp, next) => {
   try {
     // take the data from the headers in token variable
     const token = req.headers.authorization.split(" ")[1];
-    console.log("token in is auth", token)
+    console.log("token in is auth", token)  
     if (!token) {
       return resp.status(400).json({
         status: 400,
@@ -17,7 +17,9 @@ const isAuthenticate = async (req, resp, next) => {
     }
 
     // Verify the token with secret key which we used in generating token in userModel page
+    console.log("before decode Token", token);
     const decoded = jwt.verify(token, secretKey);
+    console.log("Decoded Token:", decoded);
 
     // You can access the decoded payload
 

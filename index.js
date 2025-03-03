@@ -25,9 +25,6 @@ app.use(express.json());
 
 dbConnect();
 
-app.get("/", (req, resp)=>{
-     return resp.send("hello from LORD")
-})
 
 //admin routes
 app.use("/api/v1/admin", formRouter);
