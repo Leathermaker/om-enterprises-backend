@@ -14,7 +14,7 @@ import dbConnect from "./utils/dbConnection.js";
 const app = express();
 const port = 3100;
 const corsOptions = {
-  origin: ["http://localhost:5173","http://localhost:5174", "https://om-enterprises.vercel.app/"],
+  origin: ["*"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
