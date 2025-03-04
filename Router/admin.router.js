@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { adminLogin, createAdmin, otpValidation, otpGenerate } from "../Controller/admin.controller.js";
+import { adminLogin, createAdmin, otpValidation, otpGenerate, validateUser } from "../Controller/admin.controller.js";
 import { authorizedRole, isAuthenticate } from "../middleware/Auth.Provider.js";
 
 const router = Router();
@@ -9,9 +9,7 @@ router.post("/login", adminLogin);
 router.post("/login/generate/otp", otpGenerate);
 router.post("/login/validate/otp", otpValidation);
 
-router.get("/validate",isAuthenticate, authorizedRole('admin'), (_, res) => {
-    res.status(200).json({ message: "Admin verified successfully" });
-  });
+router.get("/validate",isAuthenticate, authorizedRole('admin'), validateUser); 
 
 export default router;
   

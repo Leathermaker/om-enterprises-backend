@@ -25,10 +25,10 @@ const isAuthenticate = async (req, resp, next) => {
 
     // console.log("Decoded Token:", decoded);
 
-    const admin = await Admin.findOne({ _id: decoded._id });
+    const admin = await Admin.findOne({ _id: decoded._id }).select("email name phone role");
 
     if (!admin) throw new Error("user unavailable");
-    //    sending below data to the req and capture it in isVarify function
+    //    sending below data to the req and capture it in isVarify function 
     req.token = token;
     req.user = admin;
     req.userId = admin._id;

@@ -61,7 +61,7 @@ const adminLogin = async (req, res) => {
     // Create JWT token
     const token = jwt.sign(
       { _id: admin._id, email: admin.email },
-       "YOUR_SECRET_KEY",
+      "YOUR_SECRET_KEY",
       { expiresIn: "1h" }
     );
 
@@ -98,7 +98,7 @@ async function otpGenerate(req, res) {
       await nodeMailerSender(admin);
       return res.json({ message: "Mail is sent successfully" });
     } else {
-      const admin = await Admin.findOne({ phone: Number (payload.phone) });
+      const admin = await Admin.findOne({ phone: Number(payload.phone) });
       if (!admin) return res.status(400).json({ message: "Admin not found" });
       await twilioSender(admin);
       return res.json({ message: "OTP is sent successfully" });
@@ -109,16 +109,15 @@ async function otpGenerate(req, res) {
   }
 }
 
-
 async function otpValidation(req, res) {
   const { otp } = req.body;
-  
+
   console.log("Received OTP:", otp);
 
   try {
     // Find admin by OTP
     const admin = await Admin.findOne({ otp });
-    
+
     console.log("Admin Found:", admin);
 
     if (!admin) {
@@ -137,20 +136,32 @@ async function otpValidation(req, res) {
       httpOnly: true, // Prevent client-side JS access
       secure: process.env.NODE_ENV === "production", // HTTPS in production
       sameSite: "Strict", // Prevent CSRF attacks
-      maxAge: 60 * 60 * 1000, // 1 hour
+      maxAge: 60 * 60 * 1000 // 1 hour
     });
 
     // Remove OTP after validation
     admin.otp = undefined;
     await admin.save();
 
-    return res.status(200).json({ message: "OTP verified successfully", token });
+    return res
+      .status(200)
+      .json({ message: "OTP verified successfully", token });
   } catch (error) {
     console.error("OTP Validation Error:", error);
     res.status(500).json({ message: "Server error" });
   }
 }
 
+const validateUser = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    return res.status(200).json({ message: "authorized", user });
+  } catch (error) {
+    return res.status(400).json({ message: "server error" });
+  }
+};
 
-
-export { adminLogin, createAdmin, otpValidation, otpGenerate };
+export { adminLogin, createAdmin, otpValidation, otpGenerate, validateUser };
