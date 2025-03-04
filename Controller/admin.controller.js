@@ -164,4 +164,39 @@ const validateUser = async (req, res, next) => {
   }
 };
 
-export { adminLogin, createAdmin, otpValidation, otpGenerate, validateUser };
+
+
+const updatePassword = async(req,res)=>{
+  try {
+    const {  prevPassword , newPassword } = req.body
+    const { _id } = req.user
+    
+    const response = await Admin.findOne({_id : _id})
+    console.log(response)
+   
+    const bcryptCheck = await bcrypt.compare(prevPassword,response.password)
+    console.log(bcryptCheck,"bcrypt")
+    if(bcryptCheck){
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+      const passwordCheck = await bcrypt.compare(newPassword,response.password)
+      if(!passwordCheck){
+        const updatePass = await Admin.updateOne({_id : _id},{$set:{password:hashedPassword}})
+       return res.status(200).json({
+          data:{msg:'Password is Updated'}
+        })
+      }
+     return res.status(402).json({
+        msg:"You're previos and new passsword is same" 
+      })
+    }
+    
+  } catch (error) {
+    console.log(error)
+   return res.json({
+      data:{msg:'Unexpected Error'}
+    })
+  }
+}
+
+export { adminLogin, createAdmin, otpValidation, otpGenerate, validateUser ,updatePassword};
