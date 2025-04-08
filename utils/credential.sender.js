@@ -57,16 +57,14 @@ async function twilioSender(admin) {
   if (adminDb.length > 0) {
     setTimeout(async () => {
       adminDb.otp = null
-      await adminDb.save()
-      console.log(response);
+      // adminDb.save()
     }, 100000);
   }
 
   const accountSid = process.env.ACCOUNTSID;
   const authToken = process.env.AUTHTOKEN;
   const client = new twilio(accountSid, authToken);
-  console.log(client, accountSid, authToken);
-
+  
   async function sendSMS() {
     try {
       const message = await client.messages.create({
@@ -74,7 +72,6 @@ async function twilioSender(admin) {
         from: "+17179225895", // Your Twilio phone number
         to: "+91 7814897900",
         username: "mariah.lehner64@ethereal.email"
-        // Recipient's phone number
       });
 
       console.log("Message sent successfully:", message.sid);

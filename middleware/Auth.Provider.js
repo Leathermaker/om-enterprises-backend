@@ -6,8 +6,7 @@ const secretKey = "YOUR_SECRET_KEY";
 const isAuthenticate = async (req, resp, next) => {
   try {
     // take the data from the headers in token variable
-    const token = req.headers.authorization.split(" ")[1];
-    console.log("token in is auth", token)  
+    const token = req.headers.authorization.split(" ")[1];  
     if (!token) {
       return resp.status(400).json({
         status: 400,
