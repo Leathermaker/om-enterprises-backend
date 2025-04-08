@@ -24,7 +24,6 @@ app.use(express.json());
 
 dbConnect();
 
-
 //admin routes
 app.use("/api/v1/admin", formRouter);
 
