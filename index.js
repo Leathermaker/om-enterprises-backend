@@ -35,9 +35,7 @@ app.use('/api/v1/admin',employeeRouter)
 app.use('/api/v1/admin/plan',planRouter)
 app.use("/api/v1/user", userJobRouter);
 
-// app.listen(port|| 4000, () => {
-//   console.log(`Successfully  connected with http://localhost:${port}`);
-// });
+app.listen(port|| 4000, () => {
+  console.log(`Successfully  connected with http://localhost:${port}`);
+});
 
-
-export default app;
