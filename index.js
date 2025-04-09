@@ -14,7 +14,7 @@ import dbConnect from "./utils/dbConnection.js";
 const app = express();
 const port = 3100;
 const corsOptions = {
-  origin: ["*","https://om-enterprises.vercel.app", "https://omenterprisesgroup.in"],
+  origin: ["*","https://om-enterprises.vercel.app", "https://omenterprisesgroup.in","http://localhost:5173"],
   methods:["GET,HEAD,PUT,PATCH,POST,DELETE"],
   credentials: true,
 };
@@ -24,7 +24,7 @@ app.use(express.json());
 
 dbConnect();
 app.get("/api/v1/", (req, res) => {
-  res.send("Hello OM Enterprises!");
+  res.send("Hello from OM Enterprises!");
 });
 //admin routes
 app.use("/api/v1/admin", formRouter);

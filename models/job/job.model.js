@@ -27,5 +27,6 @@ const jobFormSchema = mongoose.Schema({
     required: true
   },
  
-});
+ 
+}, { timestamps: true });
 export const JobForm = mongoose.model("JobForm", jobFormSchema);

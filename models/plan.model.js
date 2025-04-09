@@ -6,7 +6,7 @@ const planSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    category : {
+    category: {
         type: String,
         required: true
     },
@@ -14,12 +14,13 @@ const planSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    descriptions:[ {
+    descriptions: [{
         type: String,
         required: true
     }],
+    
 },
-    { timestamp: true }
+{ timestamps: true }
 )
 
 

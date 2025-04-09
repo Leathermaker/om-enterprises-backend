@@ -3,7 +3,7 @@ import { addPlan, deletePlan, getPlan, updatePlan } from "../Controller/plan.con
 import { authorizedRole, isAuthenticate } from "../middleware/Auth.Provider.js";
 const router = Router();
 
-//job todo
+
 router.post("/add", isAuthenticate, authorizedRole("admin"), addPlan);
 router.get("/get/:category", getPlan)
 router.delete("/delete/:id", isAuthenticate, authorizedRole("admin"), deletePlan)

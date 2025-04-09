@@ -26,10 +26,12 @@ const employeeSchema = new mongoose.Schema(
       unique: true, 
       trim: true,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now, 
+    }
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 // Create the model

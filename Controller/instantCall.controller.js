@@ -1,5 +1,7 @@
 import { formContact } from "../models/contactUsForm.js";
 import { footerForm } from "../models/footerFormModel.js";
+import { Notification } from "../models/notification.model.js";
+import { nodeMailerSender } from "../utils/credential.sender.js";
 
 async function instantCallBackQuery(req, res) {
     const { name, email, subject, message, phone } = req.body;
@@ -11,6 +13,20 @@ async function instantCallBackQuery(req, res) {
             return res.status(400).json({
                 msg: "Unsuccessfully sent",
             });
+        }
+
+        try {
+            console.log("in try catch");
+            
+            const notification = await Notification.create({
+                title: "New Contact Form Submission",
+                message: `A new contact form submission has been received.\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}\nPhone: ${phone}`,
+            });
+
+            await notification.save(); 
+            console.log("Notification saved:", notification);
+        } catch (notifyErr) {
+            console.error("Error saving notification:", notifyErr);
         }
         return res.status(200).json({
             msg: "Successfully sent",
@@ -45,7 +61,7 @@ async function allInstantCallBackQueries(req, res) {
     }
 }
 
- async function postContactUs(req, res) {
+async function postContactUs(req, res) {
     const {
         name,
         email,
@@ -83,7 +99,7 @@ async function allInstantCallBackQueries(req, res) {
 }
 
 
-async function  getAllContactQueries(req, res) {
+async function getAllContactQueries(req, res) {
     try {
         const result = await formContact.find();
         if (!result) {
@@ -92,7 +108,7 @@ async function  getAllContactQueries(req, res) {
             });
         } res.status(200).json({
             msg: "Successfully sent ",
-            data : result
+            data: result
         });
 
     } catch (error) {

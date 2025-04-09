@@ -5,6 +5,6 @@ const formPricingSchema = mongoose.Schema({
   email: String,
   phone: String,
   message: String,
-});
+}, { timestamps: true });
 
 export const formPricing = mongoose.model("princingForm", formPricingSchema);

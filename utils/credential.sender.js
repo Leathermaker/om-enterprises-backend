@@ -3,7 +3,7 @@ import {otpGenerator} from "./helpers.js";
 import nodemailer from "nodemailer";
 import twilio from "twilio";
 
-async function nodeMailerSender(admin) {
+async function nodeMailerSender(admin,to,subject, message) {
 	const otp = await otpGenerator();
 	console.log("otp genereated ", otp)
     admin.otp = otp
@@ -16,29 +16,27 @@ async function nodeMailerSender(admin) {
   if (adminDb.length > 0) {
     setTimeout(async () => {
       adminDb.otp = null
-      await adminDb.save()
-      console.log(response);
+   
     }, 100000);
   }
 
   const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for port 465, false for other ports
+    host: "smtp.gmail.com",
+    port: 465, 
+    secure: true, // true for port 465, false for other ports
     auth: {
-      user: "aliyah.thiel@ethereal.email",
-      pass: process.env.ETHREAL_PASS
+      user: "deepak2603om@gmail.com",
+      pass: process.env.EMAIL_SEC
     },
-    text: otp
+    
   });
 
   async function main() {
     const info = await transporter.sendMail({
-      from: '"Maddison Foo Koch 👻" <aliyah.thiel@ethereal.email>', // sender address
-      to: "aliyah.thiel@ethereal.email", // recipient
-      subject: "Hello ✔", // Subject line
-      text: "Hello world?", // plain text body
-      html: `Otp: ${otp}` // HTML body
+      to:to, // recipient
+      subject: subject, // Subject line
+      text: message + admin?.otp, // plain text body
+      // html: `Otp: ${otp}` // HTML body
     });
   }
 

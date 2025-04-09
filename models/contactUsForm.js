@@ -9,7 +9,7 @@ const contactUsSchema = mongoose.Schema({
   isDeveloper: { type: Boolean, default: false },
   hearAboutUs: { type: String, required: true },
   message: { type: String, required: true },
-});
+ 
+}, { timestamps: true });
 
 export const formContact = mongoose.model("contactUsForm", contactUsSchema);
-    
