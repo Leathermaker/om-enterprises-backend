@@ -4,6 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "echo 'Netlify build step'",
     "dev": "nodemon api/index.js"
   },
   "author": "deepakcodez",
