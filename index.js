@@ -23,7 +23,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 dbConnect();
-app.get("/", (req, res) => {
+app.get("/api/v1/", (req, res) => {
   res.send("Hello OM Enterprises!");
 });
 //admin routes
