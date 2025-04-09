@@ -12,7 +12,7 @@ import planRouter from "./Router/plan.router.js"
 import dbConnect from "./utils/dbConnection.js";
 
 const app = express();
-const port = 3100;
+// const port = 3100;
 const corsOptions = {
   origin: "*",
   methods:["GET,HEAD,PUT,PATCH,POST,DELETE"],
@@ -44,6 +44,9 @@ app.use('/api/v1/admin/plan',planRouter)
 //user routes
 app.use("/api/v1/user", userJobRouter);
 
-app.listen(port|| 4000, () => {
-  console.log(`Successfully  connected with http://localhost:${port}`);
-});
+// app.listen(port|| 4000, () => {
+//   console.log(`Successfully  connected with http://localhost:${port}`);
+// });
+
+
+export default app;
