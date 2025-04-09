@@ -23,25 +23,16 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 dbConnect();
-
+app.get("/", (req, res) => {
+  res.send("Hello OM Enterprises!");
+});
 //admin routes
 app.use("/api/v1/admin", formRouter);
-
-//admin
 app.use("/api/v1/admin",loginRouter)
-
-
 app.use("/api/v1/admin",jobRouter)
-
-
-//company client  logo img stars comment name
-
 app.use('/api/v1/admin',companyClientRouter)
-
 app.use('/api/v1/admin',employeeRouter)
 app.use('/api/v1/admin/plan',planRouter)
-
-//user routes
 app.use("/api/v1/user", userJobRouter);
 
 // app.listen(port|| 4000, () => {
