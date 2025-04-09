@@ -5,7 +5,9 @@ import uploadFromUrl from "../../middleware/multer.js";
 
 
 const router = Router();
-const upload = multer({ dest: "uploads/" });
+// const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage: multer.memoryStorage() })
+
 
 
 
