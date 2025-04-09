@@ -12,7 +12,7 @@ import planRouter from "./Router/plan.router.js"
 import dbConnect from "./utils/dbConnection.js";
 
 const app = express();
-// const port = 3100;
+const port = 3100;
 const corsOptions = {
   origin: ["*","https://om-enterprises.vercel.app", "https://omenterprisesgroup.in"],
   methods:["GET,HEAD,PUT,PATCH,POST,DELETE"],
