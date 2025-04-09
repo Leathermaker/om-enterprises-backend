@@ -10,7 +10,8 @@ import multer from "multer";
 import { authorizedRole, isAuthenticate } from "../middleware/Auth.Provider.js";
 
 const router = Router();
-const upload = multer({ storage: multer.memoryStorage() })
+const upload = multer({ dest: "uploads/" });
+
 router.post(
   "/employee",
   isAuthenticate,
