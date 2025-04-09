@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
+
   "scripts": {
-    "build": "echo 'Netlify build step'",
-    "dev": "nodemon api/index.js"
-  },
+  "build": "echo 'Skipping build step for Netlify deployment'",
+  "dev": "nodemon index.js",
+  "start": "node index.js"
+},
   "author": "deepakcodez",
   "keywords": [],
   "license": "ISC",
