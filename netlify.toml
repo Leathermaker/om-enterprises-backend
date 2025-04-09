@@ -1,6 +1,6 @@
 [functions]
 directory = "netlify/functions"
-external_node_modules = ["express", "cors", "dotenv", "mongoose", "axios", "bcryptjs","cloudinary","cors", "dotenv", "fs", "jsonwebtoken", "multer", "nodemailer", "otp-generator", "twilio", "serverless-http"]
+external_node_modules = ["express", "cors", "dotenv", "mongoose", "axios", "bcryptjs","cloudinary","cors", "dotenv", "fs", "jsonwebtoken", "multer", "nodemailer", "otp-generator", "twilio", "serverless-http","streamifier"]
 node_bundler = "esbuild"
 
 [[redirects]]

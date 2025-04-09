@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
-
   "scripts": {
-  "build": "echo 'Skipping build step for Netlify deployment'",
-  "dev": "nodemon index.js",
-  "start": "node index.js"
-},
+    "build": "echo 'Skipping build step for Netlify deployment'",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
   "author": "deepakcodez",
   "keywords": [],
   "license": "ISC",
@@ -28,6 +27,7 @@
     "nodemailer": "^6.10.0",
     "otp-generator": "^4.0.1",
     "serverless-http": "^3.2.0",
+    "streamifier": "^0.1.1",
     "twilio": "^5.4.4"
   },
   "devDependencies": {
