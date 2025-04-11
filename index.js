@@ -9,6 +9,7 @@ import loginRouter from "./Router/admin.router.js";
 import jobRouter from "./Router/job.router.js"; 
 import userJobRouter from "./Router/user/job.router.js"; 
 import planRouter from "./Router/plan.router.js"
+import notificationRouter from "./Router/notification.router.js"
 import dbConnect from "./utils/dbConnection.js";
 
 const app = express();
@@ -34,6 +35,7 @@ app.use('/api/v1/admin',companyClientRouter)
 app.use('/api/v1/admin',employeeRouter)
 app.use('/api/v1/admin/plan',planRouter)
 app.use("/api/v1/user", userJobRouter);
+app.use("/api/v1/admin/notification", notificationRouter);
 
 app.listen(port|| 4000, () => {
   console.log(`Successfully  connected with http://localhost:${port}`);

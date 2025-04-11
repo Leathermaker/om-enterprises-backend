@@ -6,6 +6,8 @@ cloudinary.config({
   api_key: "563232755929842",
   api_secret: "y_PwyywGHwjbqIA9d_YV9cFAgJY",
 });
+
+
 const uploadFromUrl = async (req, res, next) => {
   try {
     if (!req.file) {
