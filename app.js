@@ -13,7 +13,7 @@ import notificationRouter from "./Router/notification.router.js"
 import dbConnect from "./utils/dbConnection.js";
 
 const app = express();
-const port = 3100;
+const port = process.env.PORT || 3000;
 const corsOptions = {
   origin: ["*","https://om-enterprises.vercel.app", "https://omenterprisesgroup.in","http://localhost:5173"],
   methods:["GET,HEAD,PUT,PATCH,POST,DELETE"],
@@ -37,7 +37,7 @@ app.use('/api/v1/admin/plan',planRouter)
 app.use("/api/v1/user", userJobRouter);
 app.use("/api/v1/admin/notification", notificationRouter);
 
-app.listen(port|| 4000, () => {
+app.listen(port, () => {
   console.log(`Successfully  connected with http://localhost:${port}`);
 });
 
