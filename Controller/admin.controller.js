@@ -158,7 +158,7 @@ const validateUser = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    return res.status(200).json({ message: "authorized" });
+    return res.status(200).json({ message: "authorized" ,user});
   } catch (error) {
     return res.status(400).json({ message: "server error" });
   }

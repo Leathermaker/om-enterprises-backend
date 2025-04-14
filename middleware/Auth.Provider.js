@@ -19,7 +19,7 @@ const isAuthenticate = async (req, resp, next) => {
     console.log("before decode Token", token);
     const decoded = jwt.verify(token, secretKey);
     console.log("Decoded Token:", decoded);
-
+    
     // You can access the decoded payload
 
     // console.log("Decoded Token:", decoded);
