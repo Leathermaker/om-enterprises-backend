@@ -82,7 +82,7 @@ const adminLogin = async (req, res) => {
 
 async function otpGenerate(req, res) {
   const { payload } = req.body; // Destructure payload from request body
-  console.log("-->",payload.email);
+  console.log("-->", payload.email);
 
   try {
     if (!payload) {
@@ -95,7 +95,7 @@ async function otpGenerate(req, res) {
     if (isEmail) {
       const admin = await Admin.findOne({ email: payload.email });
       if (!admin) return res.status(400).json({ message: "Admin not found" });
-      await nodeMailerSender(admin,admin.email, "OTP", `Otp:`);
+      await nodeMailerSender(admin, admin.email, "OTP", `Otp:`);
       return res.json({ message: "Mail is sent successfully" });
     } else {
       const admin = await Admin.findOne({ phone: Number(payload.phone) });
@@ -158,105 +158,116 @@ const validateUser = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    return res.status(200).json({ message: "authorized" ,user});
+    return res.status(200).json({ message: "authorized", user });
   } catch (error) {
     return res.status(400).json({ message: "server error" });
   }
 };
 
-
-
 const updatePassword = async (req, res) => {
   try {
-    const { prevPassword, newPassword } = req.body
-    const { _id } = req.user
+    const { prevPassword, newPassword } = req.body;
+    const { _id } = req.user;
 
-    const response = await Admin.findOne({ _id: _id })
-    console.log(response)
+    const response = await Admin.findOne({ _id: _id });
+    console.log(response);
 
-    const bcryptCheck = await bcrypt.compare(prevPassword, response.password)
-    console.log(bcryptCheck, "bcrypt")
+    const bcryptCheck = await bcrypt.compare(prevPassword, response.password);
+    console.log(bcryptCheck, "bcrypt");
     if (bcryptCheck) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(newPassword, salt);
-      const passwordCheck = await bcrypt.compare(newPassword, response.password)
+      const passwordCheck = await bcrypt.compare(
+        newPassword,
+        response.password
+      );
       if (!passwordCheck) {
-        await Admin.updateOne({ _id: _id }, { $set: { password: hashedPassword } })
+        await Admin.updateOne(
+          { _id: _id },
+          { $set: { password: hashedPassword } }
+        );
         return res.status(200).json({
-          data: { msg: 'Password is Updated' }
-        })
+          data: { msg: "Password is Updated Successfully" }
+        });
       }
       return res.status(402).json({
         msg: "You're previos and new passsword is same"
-      })
+      });
     }
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.json({
-      data: { msg: 'Unexpected Error' }
-    })
+      data: { msg: "Unexpected Error" }
+    });
   }
-}
-
+};
 
 const changePassword = async (req, res) => {
   try {
-    const { newPassword } = req.body
-    const { _id } = req.user
+    const { newPassword } = req.body;
+    const { _id } = req.user;
 
-    const admin = await Admin.findOne({ _id })
-    const passwordCheck = await bcrypt.compare(newPassword, admin.password)
+    const admin = await Admin.findOne({ _id });
+    const passwordCheck = await bcrypt.compare(newPassword, admin.password);
     if (passwordCheck) {
       return res.status(402).json({
         msg: "You're previos and new passsword is same"
-      })
+      });
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    await Admin.updateOne({ _id }, { $set: { password: hashedPassword } })
+    await Admin.updateOne({ _id }, { $set: { password: hashedPassword } });
 
     return res.status(200).json({
-      data: { msg: 'Password is Updated' }
-    })
-
-  }
-  catch (error) {
-    console.log(error)
+      data: { msg: "Password is Updated" }
+    });
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({
-      data: { msg: 'Unexpected Error' }
-    })
+      data: { msg: "Unexpected Error" }
+    });
   }
-}
+};
 
 const updateAdminDetails = async (req, res) => {
   try {
-    const { name, email, phone } = req.body
-    const { _id } = req.user
-    const response = await Admin.findOne({ _id })
-    if (!response) return res.status(404).json({
-      data: { msg: 'Admin not found' }
-    })
+    const { name, email, phone } = req.body;
+    const { _id } = req.user;
+    const response = await Admin.findOne({ _id });
+    if (!response)
+      return res.status(404).json({
+        data: { msg: "Admin not found" }
+      });
 
-    await Admin.updateOne({ _id }, {
-      $set: {
-        name: name || response.name,
-        email: email || response.email,
-        phone: phone || response.phone
+    await Admin.updateOne(
+      { _id },
+      {
+        $set: {
+          name: name || response.name,
+          email: email || response.email,
+          phone: phone || response.phone
+        }
       }
-    })
+    );
     return res.status(200).json({
-      data: { msg: 'Admin Details is Updated' }
-    })
-
-  }
-  catch (error) {
-    console.log(error)
+      data: { msg: "Admin Details is Updated" }
+    });
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({
-      data: { msg: 'Unexpected Error' }
-    })
+      data: { msg: "Unexpected Error" }
+    });
   }
-}
+};
 
-export { adminLogin, createAdmin, otpValidation, otpGenerate, validateUser, changePassword, updatePassword, updateAdminDetails };
+export {
+  adminLogin,
+  createAdmin,
+  otpValidation,
+  otpGenerate,
+  validateUser,
+  changePassword,
+  updatePassword,
+  updateAdminDetails
+};

@@ -113,8 +113,9 @@ async function getClients(req, res) {
     const clients = await companyClient.find();
 
     if (!clients || clients.length === 0) {
-      return res.status(404).json({
+      return res.status(200).json({
         msg: "No clients found",
+        clients: [],
       });
     }
 
