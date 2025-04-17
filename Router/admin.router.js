@@ -12,7 +12,7 @@ router.put('/update/details',isAuthenticate,authorizedRole('admin'),updateAdminD
 router.put('/update/password',isAuthenticate,authorizedRole('admin'),updatePassword);
 router.post('/change/password',isAuthenticate,authorizedRole('admin'),changePassword);
 
-router.get("/validate",isAuthenticate, authorizedRole('admin'), validateUser); 
+router.get("/validate",isAuthenticate, authorizedRole('admin','blogger'), validateUser); 
 
 export default router;
   

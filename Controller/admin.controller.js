@@ -26,7 +26,7 @@ const createAdmin = async (req, res) => {
       email,
       phone,
       password: hashedPassword,
-      role: "admin"
+      role:'user'
     });
 
     await newUser.save();
@@ -73,7 +73,7 @@ const adminLogin = async (req, res) => {
       maxAge: 60 * 60 * 1000 // 1 hour
     });
 
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({ message: "Login successful",role:admin.role, token });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Server error" });
@@ -163,6 +163,8 @@ const validateUser = async (req, res, next) => {
     return res.status(400).json({ message: "server error" });
   }
 };
+
+
 
 const updatePassword = async (req, res) => {
   try {

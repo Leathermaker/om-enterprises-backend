@@ -26,8 +26,8 @@ const adminSchema = new mongoose.Schema({
   },
   role:{
     type: String,
-    required: true,
-    default: 'user'
+    enum:['user','blogger','hr','admin'],
+    default: 'user',
 
   }
 }, { timestamps: true });
