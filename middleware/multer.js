@@ -14,7 +14,7 @@ const uploadFromUrl = async (req, res, next) => {
      return next();
       // return res.status(400).json({ error: "No file uploaded" });
     }
-
+       console.log(req.file);
     // Upload to Cloudinary
     const result = await cloudinary.v2.uploader.upload(req.file.path, {
       folder: "uploads",

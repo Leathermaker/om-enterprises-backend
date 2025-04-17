@@ -3,7 +3,7 @@ import { Employee } from "../models/employee.model.js";
 export async function employeeController(req, res) {
   try {
     const { name, designation, email, phone } = req.body;
-    const imageUrl = req.imageUrl; // Get the image URL from the middleware
+    const imageUrl = req.imageUrl;
     if (!name || !designation || !email || !phone) {
       return res.json({
         msg: "Please fill all the fields",
