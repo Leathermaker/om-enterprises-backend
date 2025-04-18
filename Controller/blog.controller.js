@@ -113,4 +113,17 @@ const deleteBlog = async (req, res) => {
   };
   
 
-export { createBlog, getBlogs, getBlogById , deleteBlog};
+  const updateBlog = async (req, res) => {
+    const { id } = req.params;
+    const { title, content } = req.body;
+  
+    try { 
+      await Blog.findByIdAndUpdate(id, { title, content });
+      res.status(200).json({ success: true, msg: "Blog updated" });
+    } catch (err) {
+      res.status(500).json({ success: false, msg: "Error updating blog" });
+    }
+  };
+  
+
+export { createBlog, getBlogs, getBlogById , deleteBlog, updateBlog};
