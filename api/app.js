@@ -1,4 +1,5 @@
 import express from "express";
+import { VercelRequest, VercelResponse } from '@vercel/node';
 import cors from "cors";
 import dotenv from "dotenv"
 dotenv.config();
@@ -39,9 +40,17 @@ app.use("/api/v1/user", userJobRouter);
 app.use("/api/v1/admin/notification", notificationRouter);
 app.use("/api/v1/blog", blogRouter);
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 // app.listen(port, () => {
 //   console.log(`Successfully  connected with http://localhost:${port}`);
 // });
 
 
-export default app;
+export default (req, res) => {
+  app(req, res);
+};
