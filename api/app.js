@@ -50,7 +50,12 @@ app.use((err, req, res, next) => {
 //   console.log(`Successfully  connected with http://localhost:${port}`);
 // });
 
-
-export default (req, res) => {
-  app(req, res);
+// Export for Vercel
+export default async (req, res) => {
+  try {
+    await app(req, res);
+  } catch (err) {
+    console.error("Server Error:", err);
+    res.status(500).json({ error: "Server crashed!" });
+  }
 };
