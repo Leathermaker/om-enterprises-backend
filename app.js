@@ -13,7 +13,7 @@ import notificationRouter from "./Router/notification.router.js";
 import blogRouter from "./Router/blog.router.js";
 import dbConnect from "./utils/dbConnection.js";
 import { rerunMachine } from "./rerunmachine.js";
-const timeInterval = 30000;
+const timeInterval = 60000;
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -58,12 +58,3 @@ app.listen(port, () => {
   console.log(`Successfully  connected with http://localhost:${port}`);
 });
 
-// Export for Vercel
-// export default async (req, res) => {
-//   try {
-//     await app(req, res);
-//   } catch (err) {
-//     console.error("Server Error:", err);
-//     res.status(500).json({ error: "Server crashed!" });
-//   }
-// };
