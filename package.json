@@ -4,8 +4,8 @@
   "main": "api/app.js",
   "type": "module",
   "scripts": {
-    "start": "node api/app.js",
-    "dev": "vercel dev"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "deepakcodez",
   "keywords": [],
@@ -13,8 +13,7 @@
   "description": "",
   "dependencies": {
     "@netlify/functions": "^3.0.4",
-    "@vercel/node": "^5.1.14",
-      "axios": "^1.7.9",
+    "axios": "^1.8.4",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",
     "cors": "^2.8.5",
