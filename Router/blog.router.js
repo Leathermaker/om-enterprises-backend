@@ -4,7 +4,8 @@ import {
   deleteBlog,
   getBlogById,
   getBlogs,
-  updateBlog
+  updateBlog,
+  getBlogByTitle,
 } from "../Controller/blog.controller.js";
 import { authorizedRole, isAuthenticate } from "../middleware/Auth.Provider.js";
 import multer from "multer";
@@ -22,7 +23,8 @@ router.post(
   createBlog
 );
 router.get("/all", getBlogs);
-router.get("/:id", getBlogById);
+// router.get("/:id", getBlogById);
+router.get("/title/:title", getBlogByTitle);
 router.delete("/delete/:id",isAuthenticate, authorizedRole("blogger","admin"), deleteBlog);
 router.put("/edit/:id", isAuthenticate, authorizedRole("admin", "blogger"), updateBlog);
 
