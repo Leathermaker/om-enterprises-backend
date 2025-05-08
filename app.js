@@ -21,7 +21,7 @@ const corsOptions = {
   origin: [
     "*",
     "https://om-enterprises.vercel.app",
-    "https://om-enterprises2.vercel.app",
+    "https://omenterprises2.vercel.app",
     "https://omenterprisesgroup.in",
     "http://localhost:5173"
   ],
