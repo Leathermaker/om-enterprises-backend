@@ -1,11 +1,9 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
-dotenv.config(); 
+dotenv.config();
 
 async function dbConnect() {
 	try {
-		console.log(process.env.MONGOURL);
 		await mongoose.connect(process.env.MONGOURL);
 		console.log("✅ Successfully connected to MongoDB");
 	} catch (error) {
@@ -14,3 +12,4 @@ async function dbConnect() {
 }
 
 export default dbConnect;
+

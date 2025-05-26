@@ -1,6 +1,18 @@
 import { JobForm } from "../models/job/job.model.js";
 import { JobApplyForm } from "../models/job/jobApply.model.js";
 
+
+
+export const Jobdemo = async (req, res) => {
+  try {
+  
+    
+    return res.status(200).json({ message: "Job demo sucess" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 const addJob = async (req, res) => {
   try {
     const { title, qualification, gender, skill, mandatoryskill, location } = req.body;

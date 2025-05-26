@@ -12,18 +12,17 @@ import planRouter from "./Router/plan.router.js";
 import notificationRouter from "./Router/notification.router.js";
 import blogRouter from "./Router/blog.router.js";
 import dbConnect from "./utils/dbConnection.js";
-import { rerunMachine } from "./rerunmachine.js";
-const timeInterval = 60000;
+
 
 const app = express();
 const port = process.env.PORT || 3000;
 const corsOptions = {
   origin: [
-    "*",
     "https://om-enterprises.vercel.app",
     "https://omenterprises2.vercel.app",
     "https://omenterprisesgroup.in",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:5174"
   ],
   methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"],
   credentials: true
@@ -31,6 +30,7 @@ const corsOptions = {
 app.options("", cors(corsOptions));
 app.use(cors(corsOptions));
 app.use(express.json());
+
 
 dbConnect();
 app.get("/api/v1/", (req, res) => {
@@ -53,7 +53,22 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-setInterval(rerunMachine, timeInterval);
+// Log memory usage periodically (every 5 seconds)
+// setInterval(() => {
+//   const memoryUsage = process.memoryUsage();
+  
+//   console.log('\nMemory Usage:');
+//   console.log(`- RSS (Resident Set Size): ${formatMemory(memoryUsage.rss)}`);
+//   console.log(`- Heap Total: ${formatMemory(memoryUsage.heapTotal)}`);
+//   console.log(`- Heap Used: ${formatMemory(memoryUsage.heapUsed)}`);
+//   console.log(`- External: ${formatMemory(memoryUsage.external)}`);
+//   console.log(`- Array Buffers: ${formatMemory(memoryUsage.arrayBuffers)}`);
+// }, 5000); // Log every 5 seconds
+
+// // Helper function to format bytes to MB
+// function formatMemory(bytes) {
+//   return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+// }
 
 app.listen(port, () => {
   console.log(`Successfully  connected with http://localhost:${port}`);
