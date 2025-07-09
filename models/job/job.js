@@ -1,4 +1,6 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
+const mongoose = require("mongoose");
+
 const jobFormSchema = mongoose.Schema({
   title: {
     type: String,
@@ -29,4 +31,6 @@ const jobFormSchema = mongoose.Schema({
  
  
 }, { timestamps: true });
-export const JobForm = mongoose.model("JobForm", jobFormSchema);
+
+ module.exports = mongoose.model("JobForm", jobFormSchema);
+ 

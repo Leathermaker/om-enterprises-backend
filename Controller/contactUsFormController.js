@@ -1,6 +1,6 @@
-import { formContact } from "../models/contactUsForm.js";
+const formContact  = require("../models/contactUsForm.js");
 
-export async function contactUsFormController(req, res) {
+ async function contactUsFormController(req, res) {
   const {
     name,
     email,
@@ -41,3 +41,6 @@ export async function contactUsFormController(req, res) {
 
 
 
+module.exports = {
+  contactUsFormController,
+}

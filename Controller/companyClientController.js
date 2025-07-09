@@ -1,4 +1,4 @@
-import { companyClient } from "../models/companyClientModel.js";
+const  companyClient  = require("../models/companyClientModel.js");  
 
 // Add a new client
 async function addClient(req, res) {
@@ -162,4 +162,4 @@ async function getClientById(req, res) {
   }
 }
 
-export { addClient, removeClient, updateClient, getClients, getClientById };
+module.exports = { addClient, removeClient, updateClient, getClients, getClientById };

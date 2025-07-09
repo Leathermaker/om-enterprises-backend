@@ -1,7 +1,7 @@
-import { Admin } from "../models/admin.model.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { nodeMailerSender, twilioSender } from "../utils/credential.sender.js";
+const  Admin  = require("../models/admin.js");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { nodeMailerSender, twilioSender } = require("../utils/credential.sender.js");
 
 // Create a new user
 const createAdmin = async (req, res) => {
@@ -263,7 +263,7 @@ const updateAdminDetails = async (req, res) => {
   }
 };
 
-export {
+module.exports =  {
   adminLogin,
   createAdmin,
   otpValidation,

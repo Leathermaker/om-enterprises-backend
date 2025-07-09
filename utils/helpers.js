@@ -1,5 +1,5 @@
-import otp from "otp-generator";
-import { Admin } from "../models/admin.model.js";
+const otp = require("otp-generator");
+const { Admin } = require("../models/admin.js");
 
 async function otpGenerator() {
 	const otpInfo = otp.generate(4, {
@@ -17,6 +17,6 @@ async function otpGenerator() {
   }
 
   
-  export { 
+  module.exports  = { 
 	otpGenerator
   }

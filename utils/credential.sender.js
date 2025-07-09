@@ -1,7 +1,7 @@
-import { Admin } from "../models/admin.model.js";
-import {otpGenerator} from "./helpers.js";
-import nodemailer from "nodemailer";
-import twilio from "twilio";
+const { Admin } = require("../models/admin.js");
+const { otpGenerator } = require("./helpers.js");
+const nodemailer = require("nodemailer");
+const twilio = require("twilio");
 
 async function nodeMailerSender(admin,to,subject, message) {
 	const otp = await otpGenerator();
@@ -82,4 +82,4 @@ async function twilioSender(admin) {
   sendSMS();
 }
 
-export { nodeMailerSender, twilioSender };
+module.exports = { nodeMailerSender, twilioSender };

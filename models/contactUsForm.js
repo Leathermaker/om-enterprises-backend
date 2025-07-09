@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const contactUsSchema = mongoose.Schema({
   name: { type: String, required: true },
@@ -13,4 +14,5 @@ const contactUsSchema = mongoose.Schema({
  
 }, { timestamps: true });
 
-export const formContact = mongoose.model("contactUsForm", contactUsSchema);
+ module.exports = mongoose.model("contactUsForm", contactUsSchema);
+

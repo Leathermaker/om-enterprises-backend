@@ -1,5 +1,7 @@
-import jwt from "jsonwebtoken";
-import { Admin } from "../models/admin.model.js";
+
+
+const jwt = require("jsonwebtoken");
+const Admin = require("../models/admin.js");
 
 const secretKey = "YOUR_SECRET_KEY";
 
@@ -68,7 +70,7 @@ const authorizedRole = (...roles) => {
     };
   };
 
-export {
+module.exports =  {
     isAuthenticate,
     authorizedRole
-}
+};

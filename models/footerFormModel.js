@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const footerFormSchema = mongoose.Schema({
   name: {
@@ -23,4 +24,4 @@ const footerFormSchema = mongoose.Schema({
   },
 }, { timestamps: true });
 
-export const footerForm = mongoose.model("InstantCallBack", footerFormSchema);
+module.exports = mongoose.model("InstantCallBack", footerFormSchema);

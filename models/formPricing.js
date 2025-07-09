@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const formPricingSchema = mongoose.Schema({
   name: String,
@@ -7,4 +8,4 @@ const formPricingSchema = mongoose.Schema({
   message: String,
 }, { timestamps: true });
 
-export const formPricing = mongoose.model("princingForm", formPricingSchema);
+module.exports = mongoose.model("princingForm", formPricingSchema);

@@ -1,28 +1,29 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-dotenv.config();
-import formRouter from "./Router/formRouter.js";
-import companyClientRouter from "./Router/companyClientRouter.js";
-import employeeRouter from "./Router/employeeRouter.js";
-import loginRouter from "./Router/admin.router.js";
-import jobRouter from "./Router/job.router.js";
-import userJobRouter from "./Router/user/job.router.js";
-import planRouter from "./Router/plan.router.js";
-import notificationRouter from "./Router/notification.router.js";
-import blogRouter from "./Router/blog.router.js";
-import dbConnect from "./utils/dbConnection.js";
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
 
+dotenv.config();
+const formRouter = require("./Router/formRouter.js");
+const companyClientRouter = require("./Router/companyClientRouter.js");
+const employeeRouter = require("./Router/employeeRouter.js");
+const loginRouter = require("./Router/admin.js");
+const jobRouter = require("./Router/job.js");
+const userJobRouter = require("./Router/user/job.js");
+const planRouter = require("./Router/plan.js");
+const notificationRouter = require("./Router/notification.js");
+const blogRouter = require("./Router/blog.js");
+const dbConnect = require("./utils/dbConnection.js");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const corsOptions = {
   origin: [
     "https://om-enterprises.vercel.app",
     "https://omenterprises2.vercel.app",
     "https://omenterprisesgroup.in",
     "http://localhost:5173",
-    "http://localhost:5174"
+    "http://localhost:5174",
+    "http://localhost:3000",
   ],
   methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"],
   credentials: true
@@ -33,7 +34,7 @@ app.use(express.json());
 
 
 dbConnect();
-app.get("/api/v1/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello from OM Enterprises!");
 });
 //admin routes
@@ -73,4 +74,5 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`Successfully  connected with http://localhost:${port}`);
 });
+// app.listen();
 

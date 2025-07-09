@@ -1,5 +1,5 @@
-import fs from "fs";
-import cloudinary from "cloudinary";
+const fs = require("fs");
+const cloudinary = require("cloudinary");
 
 cloudinary.config({
   cloud_name: "debzdd4wk",
@@ -33,5 +33,4 @@ const uploadFromUrl = async (req, res, next) => {
   }
 };
 
-export default uploadFromUrl;
-
+module.exports = uploadFromUrl;

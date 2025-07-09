@@ -1,14 +1,18 @@
-import { Router } from "express";
-import {
+
+const { Router } = require("express");
+const {
   addClient,
   getClientById,
   getClients,
   removeClient,
-  updateClient,
-} from "../Controller/companyClientController.js";
-import { authorizedRole, isAuthenticate } from "../middleware/Auth.Provider.js";
-import uploadFromUrl from "../middleware/multer.js";
-import multer from "multer";
+  updateClient
+} = require("../Controller/companyClientController.js");
+const {
+  authorizedRole,
+  isAuthenticate
+} = require("../middleware/Authprovider.js");
+const uploadFromUrl = require("../middleware/multer.js");
+const multer = require("multer");
 
 const router = Router();
 const upload = multer({ dest: "uploads/" });
@@ -39,4 +43,4 @@ router.delete(
   removeClient
 );
 
-export default router;
+module.exports = router;

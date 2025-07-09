@@ -1,10 +1,6 @@
-import { footerForm } from "../models/footerFormModel.js";
-import { Notification } from "../models/notification.model.js";
+const  footerForm  = require("../models/footerFormModel.js");
 
-import { footerForm } from "../models/footerForm.model.js"; // adjust path as needed
-import { Notification } from "../models/notification.model.js"; // adjust path as needed
-
-export async function footerFormController(req, res) {
+ async function footerFormController(req, res) {
   const { name, email, subject, message } = req.body;
 
   try {
@@ -30,7 +26,7 @@ export async function footerFormController(req, res) {
   }
 }
 
-export async function footerFormGet(req, res) {
+ async function footerFormGet(req, res) {
   try {
 
     const result = await footerForm.find()
@@ -47,3 +43,6 @@ export async function footerFormGet(req, res) {
     console.log(error);
   }
 }
+
+
+module.exports = { footerFormController, footerFormGet };

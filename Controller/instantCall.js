@@ -1,6 +1,6 @@
-import { formContact } from "../models/contactUsForm.js";
-import { footerForm } from "../models/footerFormModel.js";
-import { Notification } from "../models/notification.model.js";
+const  formContact  = require("../models/contactUsForm.js");
+const footerForm  = require("../models/footerFormModel.js");
+const  Notification  = require("../models/notification.js");
 
 async function instantCallBackQuery(req, res) {
     const { name, email, subject, message, phone } = req.body;
@@ -122,7 +122,7 @@ async function getAllContactQueries(req, res) {
 
 
 
-export {
+module.exports ={
     instantCallBackQuery,
     allInstantCallBackQueries,
     postContactUs,

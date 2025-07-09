@@ -1,6 +1,15 @@
-import { Router } from "express";
-import { allInstantCallBackQueries, getAllContactQueries, instantCallBackQuery, postContactUs } from "../Controller/instantCall.controller.js";
-import { authorizedRole, isAuthenticate } from "../middleware/Auth.Provider.js";
+
+const { Router } = require("express");
+const { 
+  allInstantCallBackQueries, 
+  getAllContactQueries, 
+  instantCallBackQuery, 
+  postContactUs 
+} = require("../Controller/instantCall.js");
+const { 
+  authorizedRole, 
+  isAuthenticate 
+} = require("../middleware/Authprovider.js");
 
 
 const router = Router();
@@ -20,4 +29,4 @@ router.get("/form/contact",
     authorizedRole("admin"),
     getAllContactQueries);
 
-export default router;
+module.exports = router;

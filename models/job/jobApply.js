@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const jobApplySchema = mongoose.Schema(
   {
     jobId: {
@@ -33,4 +34,5 @@ const jobApplySchema = mongoose.Schema(
   },
   { timeStamp: true }
 );
-export const JobApplyForm = mongoose.model("JobApplyForm", jobApplySchema);
+   module.exports  = mongoose.model("JobApplyForm", jobApplySchema);
+

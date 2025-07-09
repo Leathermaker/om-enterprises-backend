@@ -1,6 +1,6 @@
-import { Employee } from "../models/employee.model.js";
+const Employee = require("../models/employee.js") ;
 
-export async function employeeController(req, res) {
+ async function employeeController(req, res) {
   try {
     const { name, designation, email, phone } = req.body;
     const imageUrl = req.imageUrl;
@@ -25,7 +25,7 @@ export async function employeeController(req, res) {
   }
 }
 
-export async function allEmployees(req, res) {
+ async function allEmployees(req, res) {
   try {
     const result = await Employee.find();
     res.json({
@@ -37,7 +37,7 @@ export async function allEmployees(req, res) {
     });
   }
 }
-export async function deleteEmployee(req, res) {
+ async function deleteEmployee(req, res) {
   try {
 
     const { id } = req.params;
@@ -66,7 +66,7 @@ export async function deleteEmployee(req, res) {
   }
 }
 
-export async function updateEmployee(req, res) {
+ async function updateEmployee(req, res) {
     const { name, designation, phone, email ,  } = req.body;
     const { id } = req.params;
     console.log(req.body);
@@ -92,4 +92,11 @@ export async function updateEmployee(req, res) {
       res.status(500).json({ msg: "Unexpected Error" });
     }
   }
+
   
+  module.exports = {
+    employeeController,
+    updateEmployee,
+    deleteEmployee,
+    allEmployees,
+  }

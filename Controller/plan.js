@@ -1,4 +1,4 @@
-import { Plan } from "../models/plan.model.js";
+const Plan = require("../models/plan.js");
 
 const addPlan = async (req, res) => {
     const { title, price, descriptions, category } = req.body;
@@ -118,7 +118,7 @@ const updatePlan = async (req, res) => {
 
 
 
-export {
+module.exports = {
     addPlan,
     getPlan,
     deletePlan,

@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const companyClinetSchema = mongoose.Schema({
   img: { type: String, required: true },
@@ -7,7 +8,8 @@ const companyClinetSchema = mongoose.Schema({
   comment: { type: String, required: true },
 }, { timestamps: true });
 
-export const companyClient = mongoose.model(
+module.exports = mongoose.model(
   "companyClient",
   companyClinetSchema
 );
+

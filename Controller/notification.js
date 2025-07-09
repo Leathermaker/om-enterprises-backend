@@ -1,4 +1,4 @@
-import { Notification } from "../models/notification.model.js"
+const  Notification  = require("../models/notification.js")
 
 const getAllNotification = async (req, res) => {
     try {
@@ -24,4 +24,4 @@ const getAllNotification = async (req, res) => {
 }
 
 
-export { getAllNotification }
+module.exports=  { getAllNotification }
